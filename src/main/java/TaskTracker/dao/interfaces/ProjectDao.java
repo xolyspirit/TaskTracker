@@ -14,9 +14,9 @@ public interface ProjectDao {
     Project getProjectById(int id);
     Project getProjectByTitle(String title);
     List<Project> getAllProjects();
-    Project save(Project project);
+    String save(Project project);
     void update(Project project);
-    void delete(Project project);
+    void delete(Integer id);
 
 
 }

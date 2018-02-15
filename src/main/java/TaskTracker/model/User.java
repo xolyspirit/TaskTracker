@@ -37,10 +37,13 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author",orphanRemoval = true,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "developers")
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name = "user_project",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Project> projects = new HashSet<>();
 
-    @OneToMany(mappedBy = "manager",orphanRemoval = true,fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "manager",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Project> ownProjects = new HashSet<>();
 
     public Set<Project> getOwnProjects() {

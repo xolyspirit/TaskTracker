@@ -39,5 +39,10 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.addDeveloper(projectId,developerId));
     }
 
+    @DeleteMapping("project/{id}")
+    public ResponseEntity<?> deleteProject(@PathVariable("id") Integer id){
+        return ResponseEntity.ok().body(projectService.delete(id));
+    }
+
 
 }

@@ -17,5 +17,5 @@ public interface ProjectService {
     List<Project> getAllProjects();
     String save(Project project);
     String update(Project project);
-    String delete(Project project);
+    String delete(Integer id);
 }

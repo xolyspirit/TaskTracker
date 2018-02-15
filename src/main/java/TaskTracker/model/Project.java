@@ -19,19 +19,17 @@ public class Project implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "body", nullable = false, length = 1024)
+    @Column(name = "body")
     private String body;
 
-    @Column(name = "title", nullable = false, length = 45)
+    @Column(name = "title")
     private String title;
 
     @OneToMany(mappedBy = "project",orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Task> tasks = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_project",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
+
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "projects")
     private Set<User> developers = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

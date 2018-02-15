@@ -77,15 +77,8 @@ public class ProjectServiceImpl implements ProjectService{
 
     public String save(Project project) {
         User manager = userDao.getUserById(project.getManager().getId());
-        manager.getOwnProjects().add(projectDao.save(project));
         project.setManager(manager);
-        userDao.update(manager);
-        if(projectDao.getProjectByTitle(project.getTitle())!=null){
-            return "Project saved";
-        }
-        else {
-            return "Something went wrong";
-        }
+        return projectDao.save(project);
     }
 
     public String update(Project project) {
@@ -93,9 +86,9 @@ public class ProjectServiceImpl implements ProjectService{
         return "All done";
     }
 
-    public String delete(Project project) {
-        projectDao.delete(project);
-        if (projectDao.getProjectById(project.getId())==null){
+    public String delete(Integer id) {
+        projectDao.delete(id);
+        if (projectDao.getProjectById(id)==null){
             return "Project deleted";
         }
         else {

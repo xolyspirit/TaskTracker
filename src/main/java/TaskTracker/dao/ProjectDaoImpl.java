@@ -51,7 +51,7 @@ public class ProjectDaoImpl implements ProjectDao {
         Project project = session.get(Project.class, projectId);
         User developer = session.get(User.class, developerId);
         developer.getProjects().add(project);
-        session.saveOrUpdate(developer);
+        session.merge(developer);
     }
 
     public void deleteDeveloper(int id, User user) {
@@ -78,9 +78,14 @@ public class ProjectDaoImpl implements ProjectDao {
         return query.getResultList();
     }
 
-    public Project save(Project project) {
+    public String save(Project project) {
         sessionFactory.getCurrentSession().save(project);
-        return project;
+        if (sessionFactory.getCurrentSession().contains(project)){
+            return "Project saved";
+        }
+        else {
+            return "Something went wrong...";
+        }
     }
 
     public void update(Project project) {
@@ -101,7 +106,9 @@ public class ProjectDaoImpl implements ProjectDao {
 
     }
 
-    public void delete(Project project) {
+    public void delete(Integer id) {
+        Project project = new Project();
+        project.setId(id);
         sessionFactory.getCurrentSession().delete(project);
         sessionFactory.getCurrentSession().flush();
     }
